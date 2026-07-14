@@ -1,0 +1,86 @@
+
+<style>
+.tree { font-family: var(--font-mono); font-size: 12px; line-height: 1.75; color: var(--color-text-primary); padding: 1rem 1.25rem; }
+.dir { color: var(--color-text-info); font-weight: 500; }
+.file { color: var(--color-text-primary); }
+.comment { color: var(--color-text-tertiary); margin-left: 4px; }
+.section { margin-top: 12px; padding: 8px 12px; background: var(--color-background-secondary); border-left: 2px solid var(--color-border-info); border-radius: 0 6px 6px 0; margin-bottom: 4px; font-size: 11px; color: var(--color-text-secondary); letter-spacing: 0.05em; }
+</style>
+<h2 class="sr-only">BharatRakshak monorepo folder structure</h2>
+<div class="tree">
+<div class="section">MONOREPO ROOT</div>
+<span class="dir">bharatrakshak/</span><br>
+├── <span class="dir">apps/</span><br>
+│   ├── <span class="dir">web/</span><span class="comment">          # Next.js 15 frontend</span><br>
+│   │   ├── <span class="dir">app/</span><span class="comment">       # App Router pages</span><br>
+│   │   │   ├── <span class="dir">(auth)/</span><span class="comment">    # login, register, forgot</span><br>
+│   │   │   ├── <span class="dir">(dashboard)/</span><span class="comment"> # protected shell</span><br>
+│   │   │   │   ├── <span class="dir">alerts/</span><br>
+│   │   │   │   ├── <span class="dir">incidents/</span><br>
+│   │   │   │   ├── <span class="dir">surveillance/</span><br>
+│   │   │   │   ├── <span class="dir">analytics/</span><br>
+│   │   │   │   └── <span class="dir">settings/</span><br>
+│   │   │   ├── <span class="dir">api/</span><span class="comment">       # Next.js route handlers</span><br>
+│   │   │   └── <span class="file">layout.tsx</span><br>
+│   │   ├── <span class="dir">components/</span><br>
+│   │   │   ├── <span class="dir">ui/</span><span class="comment">        # Shadcn base components</span><br>
+│   │   │   ├── <span class="dir">alerts/</span><span class="comment">    # Alert cards, feeds</span><br>
+│   │   │   ├── <span class="dir">map/</span><span class="comment">       # Leaflet/Mapbox views</span><br>
+│   │   │   ├── <span class="dir">video/</span><span class="comment">     # CCTV stream viewer</span><br>
+│   │   │   └── <span class="dir">charts/</span><span class="comment">    # Recharts dashboards</span><br>
+│   │   ├── <span class="dir">hooks/</span><span class="comment">         # useAlerts, useSocket, useAuth</span><br>
+│   │   ├── <span class="dir">store/</span><span class="comment">         # Zustand slices</span><br>
+│   │   ├── <span class="dir">lib/</span><span class="comment">           # axios client, socket.io</span><br>
+│   │   └── <span class="dir">types/</span><span class="comment">         # Shared TS types</span><br>
+<br>
+<div class="section">API GATEWAY</div>
+│   └── <span class="dir">api/</span><span class="comment">             # Express.js gateway</span><br>
+│       ├── <span class="dir">src/</span><br>
+│       │   ├── <span class="dir">routes/</span><br>
+│       │   │   ├── <span class="file">auth.routes.ts</span><br>
+│       │   │   ├── <span class="file">alerts.routes.ts</span><br>
+│       │   │   ├── <span class="file">incidents.routes.ts</span><br>
+│       │   │   ├── <span class="file">users.routes.ts</span><br>
+│       │   │   └── <span class="file">media.routes.ts</span><br>
+│       │   ├── <span class="dir">middleware/</span><br>
+│       │   │   ├── <span class="file">auth.middleware.ts</span><br>
+│       │   │   ├── <span class="file">ratelimit.middleware.ts</span><br>
+│       │   │   ├── <span class="file">rbac.middleware.ts</span><br>
+│       │   │   └── <span class="file">validate.middleware.ts</span><br>
+│       │   ├── <span class="dir">services/</span><span class="comment">   # Thin service layer</span><br>
+│       │   ├── <span class="dir">models/</span><span class="comment">     # Mongoose schemas</span><br>
+│       │   ├── <span class="dir">queues/</span><span class="comment">     # Bull job queues</span><br>
+│       │   ├── <span class="dir">sockets/</span><span class="comment">    # Socket.io namespaces</span><br>
+│       │   └── <span class="file">app.ts</span><br>
+<br>
+<div class="section">AI ENGINE</div>
+├── <span class="dir">services/</span><br>
+│   └── <span class="dir">ai-engine/</span><span class="comment">       # FastAPI Python service</span><br>
+│       ├── <span class="dir">app/</span><br>
+│       │   ├── <span class="dir">routers/</span><br>
+│       │   │   ├── <span class="file">detection.py</span><span class="comment">  # YOLOv8 endpoints</span><br>
+│       │   │   ├── <span class="file">scoring.py</span><span class="comment">    # XGBoost threat</span><br>
+│       │   │   └── <span class="file">classify.py</span><span class="comment">   # NLP incidents</span><br>
+│       │   ├── <span class="dir">models/</span><br>
+│       │   │   ├── <span class="file">yolo_handler.py</span><br>
+│       │   │   ├── <span class="file">xgb_handler.py</span><br>
+│       │   │   └── <span class="file">nlp_handler.py</span><br>
+│       │   ├── <span class="dir">workers/</span><span class="comment">    # Celery async tasks</span><br>
+│       │   ├── <span class="dir">schemas/</span><span class="comment">    # Pydantic models</span><br>
+│       │   └── <span class="file">main.py</span><br>
+│       ├── <span class="dir">ml_models/</span><span class="comment">       # .pt, .json weights</span><br>
+│       └── <span class="file">requirements.txt</span><br>
+<br>
+<div class="section">SHARED + INFRA</div>
+├── <span class="dir">packages/</span><br>
+│   ├── <span class="dir">shared-types/</span><span class="comment">    # TS interfaces (Alert, User…)</span><br>
+│   └── <span class="dir">ui-kit/</span><span class="comment">          # Design tokens, components</span><br>
+├── <span class="dir">infra/</span><br>
+│   ├── <span class="dir">docker/</span><br>
+│   │   ├── <span class="file">Dockerfile.web</span><br>
+│   │   ├── <span class="file">Dockerfile.api</span><br>
+│   │   └── <span class="file">Dockerfile.ai</span><br>
+│   ├── <span class="file">docker-compose.yml</span><br>
+│   └── <span class="dir">k8s/</span><span class="comment">            # Kubernetes manifests</span><br>
+└── <span class="file">turbo.json</span><span class="comment">           # Turborepo pipeline</span>
+</div>

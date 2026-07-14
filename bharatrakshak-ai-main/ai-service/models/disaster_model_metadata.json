@@ -1,0 +1,112 @@
+{
+  "model_name": "disaster_prediction_xgboost",
+  "model_version": "1.0.0",
+  "architecture": "unified_multiclass",
+  "approach": "A",
+  "algorithm": "XGBoost (multi:softprob)",
+  "dataset_version": "1.0.0",
+  "dataset_hash_md5": "83061cee9a2c5aaf3db8cce7b17d7046",
+  "classes": [
+    "cyclone",
+    "flood",
+    "heatwave",
+    "landslide"
+  ],
+  "features": [
+    "rainfall_mm",
+    "temperature_c",
+    "humidity_pct",
+    "river_discharge",
+    "water_level_m",
+    "elevation_m",
+    "wind_speed_kmh",
+    "pressure_hpa",
+    "population_density",
+    "land_cover_encoded",
+    "soil_type_encoded",
+    "heat_index",
+    "wind_pressure_ratio",
+    "rainfall_intensity",
+    "flood_risk_composite"
+  ],
+  "feature_count": 15,
+  "hyperparameters": {
+    "learning_rate": 0.03574712922600244,
+    "max_depth": 10,
+    "n_estimators": 400,
+    "subsample": 0.8394633936788146,
+    "colsample_bytree": 0.6624074561769746,
+    "min_child_weight": 2,
+    "gamma": 0.2904180608409973,
+    "reg_alpha": 1.7323522915498704,
+    "reg_lambda": 2.002787529358022
+  },
+  "evaluation_metrics": {
+    "test_set": {
+      "accuracy": 0.9982716049382716,
+      "precision_macro": 0.997760480113993,
+      "recall_macro": 0.9985833333333334,
+      "f1_macro": 0.9981684613706492,
+      "roc_auc_ovr": 0.9999744603322225,
+      "training_time_s": 8.88,
+      "inference_ms_per_sample": 0.0076,
+      "optuna_time_s": 486.3,
+      "n_estimators_used": 373
+    },
+    "classification_report": {
+      "cyclone": {
+        "precision": 0.9933774834437086,
+        "recall": 1.0,
+        "f1-score": 0.9966777408637874,
+        "support": 750.0
+      },
+      "flood": {
+        "precision": 0.9993311036789297,
+        "recall": 0.996,
+        "f1-score": 0.9976627712854758,
+        "support": 1500.0
+      },
+      "heatwave": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 1200.0
+      },
+      "landslide": {
+        "precision": 0.9983333333333333,
+        "recall": 0.9983333333333333,
+        "f1-score": 0.9983333333333333,
+        "support": 600.0
+      },
+      "accuracy": 0.9982716049382716,
+      "macro avg": {
+        "precision": 0.997760480113993,
+        "recall": 0.9985833333333334,
+        "f1-score": 0.9981684613706492,
+        "support": 4050.0
+      },
+      "weighted avg": {
+        "precision": 0.9982789550867102,
+        "recall": 0.9982716049382716,
+        "f1-score": 0.9982722129817418,
+        "support": 4050.0
+      }
+    }
+  },
+  "comparison_summary": {
+    "approach_a_f1": 0.9981684613706492,
+    "approach_b_f1": 0.9981684613706492,
+    "winner": "A (Unified)",
+    "reason": "Higher or equal F1 with simpler architecture"
+  },
+  "training_details": {
+    "optuna_trials": 50,
+    "optuna_time_s": 486.3,
+    "training_time_s": 8.88,
+    "inference_ms_per_sample": 0.0076,
+    "early_stopping_rounds": 20
+  },
+  "git_commit_hash": "c1210fe048861fb1c51ec8e181a328da9919d1d3",
+  "timestamp": "2026-07-03T08:59:09.813545",
+  "random_seed": 42
+}

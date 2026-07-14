@@ -1,0 +1,15 @@
+"""Logging setup for API runtime and tests."""
+
+import logging
+import sys
+
+
+def configure_logging(level: str) -> None:
+    """Configure process-wide console logging."""
+
+    logging.basicConfig(
+        level=getattr(logging, level.upper(), logging.INFO),
+        format="%(asctime)s %(levelname)s %(name)s %(message)s",
+        stream=sys.stdout,
+        force=True,
+    )

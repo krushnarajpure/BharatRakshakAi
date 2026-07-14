@@ -1,0 +1,88 @@
+
+<style>
+.api-section { margin-bottom: 18px; }
+.api-group { font-size: 11px; font-weight: 500; letter-spacing: 0.07em; color: var(--color-text-tertiary); padding: 4px 0 6px; border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 8px; }
+.ep-row { display: flex; align-items: baseline; gap: 10px; padding: 4px 0; font-size: 12px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.ep-row:last-child { border-bottom: none; }
+.method { font-family: var(--font-mono); font-size: 11px; font-weight: 500; min-width: 44px; text-align: center; padding: 2px 0; border-radius: 4px; }
+.m-get    { background: var(--color-background-success); color: var(--color-text-success); }
+.m-post   { background: var(--color-background-info);    color: var(--color-text-info); }
+.m-put    { background: var(--color-background-warning);  color: var(--color-text-warning); }
+.m-patch  { background: var(--color-background-warning);  color: var(--color-text-warning); }
+.m-delete { background: var(--color-background-danger);   color: var(--color-text-danger); }
+.ep-path { font-family: var(--font-mono); font-size: 11px; color: var(--color-text-primary); min-width: 280px; }
+.ep-desc { font-size: 12px; color: var(--color-text-secondary); }
+.auth-badge { font-size: 10px; padding: 1px 6px; border-radius: 3px; background: var(--color-background-secondary); color: var(--color-text-tertiary); margin-left: auto; white-space: nowrap; }
+.ai-badge { background: var(--color-background-danger); color: var(--color-text-danger); }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 0 4px; }
+h2.sr-only { position: absolute; left: -9999px; }
+</style>
+<h2 class="sr-only">BharatRakshak REST API design and authentication flow</h2>
+<div style="padding: 4px 0;">
+  <div class="cols">
+    <div>
+      <div class="api-section">
+        <div class="api-group">AUTH  —  /api/v1/auth</div>
+        <div class="ep-row"><span class="method m-post">POST</span><span class="ep-path">/login</span><span class="auth-badge">public</span></div>
+        <div class="ep-row"><span class="method m-post">POST</span><span class="ep-path">/register</span><span class="auth-badge">admin</span></div>
+        <div class="ep-row"><span class="method m-post">POST</span><span class="ep-path">/refresh</span><span class="auth-badge">public</span></div>
+        <div class="ep-row"><span class="method m-post">POST</span><span class="ep-path">/logout</span><span class="auth-badge">bearer</span></div>
+        <div class="ep-row"><span class="method m-post">POST</span><span class="ep-path">/mfa/verify</span><span class="auth-badge">bearer</span></div>
+        <div class="ep-row"><span class="method m-post">POST</span><span class="ep-path">/forgot-password</span><span class="auth-badge">public</span></div>
+      </div>
+
+      <div class="api-section">
+        <div class="api-group">ALERTS  —  /api/v1/alerts</div>
+        <div class="ep-row"><span class="method m-get">GET</span><span class="ep-path">/</span><span class="auth-badge">bearer</span></div>
+        <div class="ep-row"><span class="method m-get">GET</span><span class="ep-path">/:alertId</span><span class="auth-badge">bearer</span></div>
+        <div class="ep-row"><span class="method m-post">POST</span><span class="ep-path">/</span><span class="auth-badge">system</span></div>
+        <div class="ep-row"><span class="method m-patch">PATCH</span><span class="ep-path">/:alertId/status</span><span class="auth-badge">officer+</span></div>
+        <div class="ep-row"><span class="method m-post">POST</span><span class="ep-path">/:alertId/assign</span><span class="auth-badge">admin</span></div>
+        <div class="ep-row"><span class="method m-get">GET</span><span class="ep-path">/live/stream</span><span class="auth-badge">WS</span></div>
+        <div class="ep-row"><span class="method m-get">GET</span><span class="ep-path">/geo/nearby</span><span class="auth-badge">bearer</span></div>
+      </div>
+
+      <div class="api-section">
+        <div class="api-group">INCIDENTS  —  /api/v1/incidents</div>
+        <div class="ep-row"><span class="method m-get">GET</span><span class="ep-path">/</span><span class="auth-badge">bearer</span></div>
+        <div class="ep-row"><span class="method m-post">POST</span><span class="ep-path">/</span><span class="auth-badge">officer+</span></div>
+        <div class="ep-row"><span class="method m-get">GET</span><span class="ep-path">/:incidentId</span><span class="auth-badge">bearer</span></div>
+        <div class="ep-row"><span class="method m-put">PUT</span><span class="ep-path">/:incidentId</span><span class="auth-badge">officer+</span></div>
+        <div class="ep-row"><span class="method m-post">POST</span><span class="ep-path">/:incidentId/close</span><span class="auth-badge">admin</span></div>
+        <div class="ep-row"><span class="method m-post">POST</span><span class="ep-path">/:incidentId/attachments</span><span class="auth-badge">officer+</span></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="api-section">
+        <div class="api-group">AI ENGINE  —  /api/v1/ai (→ FastAPI)</div>
+        <div class="ep-row"><span class="method m-post">POST</span><span class="ep-path">/detect/image</span><span class="auth-badge ai-badge">AI key</span></div>
+        <div class="ep-row"><span class="method m-post">POST</span><span class="ep-path">/detect/video-frame</span><span class="auth-badge ai-badge">AI key</span></div>
+        <div class="ep-row"><span class="method m-post">POST</span><span class="ep-path">/score/threat</span><span class="auth-badge ai-badge">AI key</span></div>
+        <div class="ep-row"><span class="method m-post">POST</span><span class="ep-path">/classify/incident</span><span class="auth-badge ai-badge">AI key</span></div>
+        <div class="ep-row"><span class="method m-get">GET</span><span class="ep-path">/model/status</span><span class="auth-badge">admin</span></div>
+        <div class="ep-row"><span class="method m-post">POST</span><span class="ep-path">/model/reload</span><span class="auth-badge">admin</span></div>
+      </div>
+
+      <div class="api-section">
+        <div class="api-group">CAMERAS  —  /api/v1/cameras</div>
+        <div class="ep-row"><span class="method m-get">GET</span><span class="ep-path">/</span><span class="auth-badge">bearer</span></div>
+        <div class="ep-row"><span class="method m-post">POST</span><span class="ep-path">/</span><span class="auth-badge">admin</span></div>
+        <div class="ep-row"><span class="method m-get">GET</span><span class="ep-path">/:cameraId/stream</span><span class="auth-badge">officer+</span></div>
+        <div class="ep-row"><span class="method m-patch">PATCH</span><span class="ep-path">/:cameraId/zones</span><span class="auth-badge">admin</span></div>
+        <div class="ep-row"><span class="method m-delete">DELETE</span><span class="ep-path">/:cameraId</span><span class="auth-badge">admin</span></div>
+      </div>
+
+      <div class="api-section">
+        <div class="api-group">USERS & ANALYTICS</div>
+        <div class="ep-row"><span class="method m-get">GET</span><span class="ep-path">/users/</span><span class="auth-badge">admin</span></div>
+        <div class="ep-row"><span class="method m-put">PUT</span><span class="ep-path">/users/:id/role</span><span class="auth-badge">admin</span></div>
+        <div class="ep-row"><span class="method m-get">GET</span><span class="ep-path">/analytics/overview</span><span class="auth-badge">analyst+</span></div>
+        <div class="ep-row"><span class="method m-get">GET</span><span class="ep-path">/analytics/heatmap</span><span class="auth-badge">analyst+</span></div>
+        <div class="ep-row"><span class="method m-get">GET</span><span class="ep-path">/analytics/trends</span><span class="auth-badge">analyst+</span></div>
+        <div class="ep-row"><span class="method m-get">GET</span><span class="ep-path">/audit/logs</span><span class="auth-badge">admin</span></div>
+        <div class="ep-row"><span class="method m-get">GET</span><span class="ep-path">/media/:key/presign</span><span class="auth-badge">officer+</span></div>
+      </div>
+    </div>
+  </div>
+</div>

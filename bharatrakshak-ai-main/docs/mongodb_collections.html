@@ -1,0 +1,157 @@
+
+<style>
+.coll-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 4px 0; }
+.coll-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden; }
+.coll-header { padding: 10px 14px 8px; border-bottom: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; gap: 8px; }
+.coll-name { font-size: 13px; font-weight: 500; color: var(--color-text-primary); }
+.coll-tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; }
+.coll-body { padding: 10px 14px; font-family: var(--font-mono); font-size: 11px; line-height: 1.8; color: var(--color-text-secondary); }
+.field-key { color: var(--color-text-info); }
+.field-type { color: var(--color-text-tertiary); }
+.idx-badge { display: inline-block; font-size: 10px; padding: 1px 5px; border-radius: 3px; margin-left: 4px; background: var(--color-background-warning); color: var(--color-text-warning); }
+.idx-section { margin-top: 8px; padding-top: 6px; border-top: 0.5px solid var(--color-border-tertiary); font-size: 10px; color: var(--color-text-tertiary); line-height: 1.7; }
+h2.sr-only { position: absolute; left: -9999px; }
+</style>
+<h2 class="sr-only">MongoDB Atlas collections for BharatRakshak</h2>
+<div class="coll-grid">
+
+  <!-- users -->
+  <div class="coll-card">
+    <div class="coll-header">
+      <i class="ti ti-users" style="font-size:16px;color:var(--color-text-info)" aria-hidden="true"></i>
+      <span class="coll-name">users</span>
+      <span class="coll-tag" style="background:var(--color-background-info);color:var(--color-text-info)">auth</span>
+    </div>
+    <div class="coll-body">
+      <span class="field-key">_id</span>: <span class="field-type">ObjectId</span><br>
+      <span class="field-key">uid</span>: <span class="field-type">UUID</span><span class="idx-badge">UNIQUE</span><br>
+      <span class="field-key">name</span>: <span class="field-type">String</span><br>
+      <span class="field-key">email</span>: <span class="field-type">String</span><span class="idx-badge">UNIQUE</span><br>
+      <span class="field-key">passwordHash</span>: <span class="field-type">String</span><br>
+      <span class="field-key">role</span>: <span class="field-type">Enum[admin|officer|analyst|viewer]</span><br>
+      <span class="field-key">district</span>: <span class="field-type">String</span><br>
+      <span class="field-key">permissions</span>: <span class="field-type">String[]</span><br>
+      <span class="field-key">mfaEnabled</span>: <span class="field-type">Boolean</span><br>
+      <span class="field-key">lastLogin</span>: <span class="field-type">Date</span><br>
+      <span class="field-key">isActive</span>: <span class="field-type">Boolean</span><br>
+      <span class="field-key">createdAt</span>: <span class="field-type">Date</span>
+      <div class="idx-section">Indexes: email(1), role(1), district(1)</div>
+    </div>
+  </div>
+
+  <!-- alerts -->
+  <div class="coll-card">
+    <div class="coll-header">
+      <i class="ti ti-bell-ringing" style="font-size:16px;color:var(--color-text-danger)" aria-hidden="true"></i>
+      <span class="coll-name">alerts</span>
+      <span class="coll-tag" style="background:var(--color-background-danger);color:var(--color-text-danger)">core</span>
+    </div>
+    <div class="coll-body">
+      <span class="field-key">_id</span>: <span class="field-type">ObjectId</span><br>
+      <span class="field-key">alertId</span>: <span class="field-type">UUID</span><span class="idx-badge">UNIQUE</span><br>
+      <span class="field-key">type</span>: <span class="field-type">Enum[intrusion|weapon|crowd|fire|anomaly]</span><br>
+      <span class="field-key">severity</span>: <span class="field-type">Enum[critical|high|medium|low]</span><br>
+      <span class="field-key">status</span>: <span class="field-type">Enum[new|acknowledged|resolved|false_positive]</span><br>
+      <span class="field-key">location</span>: <span class="field-type">GeoJSON Point</span><span class="idx-badge">2dsphere</span><br>
+      <span class="field-key">cameraId</span>: <span class="field-type">ObjectId → cameras</span><br>
+      <span class="field-key">aiScore</span>: <span class="field-type">Float [0–1]</span><br>
+      <span class="field-key">detectedObjects</span>: <span class="field-type">Object[]</span><br>
+      <span class="field-key">mediaUrl</span>: <span class="field-type">String (S3)</span><br>
+      <span class="field-key">assignedTo</span>: <span class="field-type">ObjectId → users</span><br>
+      <span class="field-key">resolvedAt</span>: <span class="field-type">Date</span><br>
+      <span class="field-key">createdAt</span>: <span class="field-type">Date</span><span class="idx-badge">TTL 90d</span>
+      <div class="idx-section">Indexes: location(2dsphere), severity+status, cameraId, createdAt(TTL)</div>
+    </div>
+  </div>
+
+  <!-- incidents -->
+  <div class="coll-card">
+    <div class="coll-header">
+      <i class="ti ti-file-report" style="font-size:16px;color:var(--color-text-warning)" aria-hidden="true"></i>
+      <span class="coll-name">incidents</span>
+      <span class="coll-tag" style="background:var(--color-background-warning);color:var(--color-text-warning)">core</span>
+    </div>
+    <div class="coll-body">
+      <span class="field-key">_id</span>: <span class="field-type">ObjectId</span><br>
+      <span class="field-key">incidentId</span>: <span class="field-type">String (INC-YYYYMMDD-XXXX)</span><br>
+      <span class="field-key">title</span>: <span class="field-type">String</span><br>
+      <span class="field-key">description</span>: <span class="field-type">String</span><br>
+      <span class="field-key">category</span>: <span class="field-type">Enum[theft|violence|accident|natural|other]</span><br>
+      <span class="field-key">alertIds</span>: <span class="field-type">ObjectId[]</span><br>
+      <span class="field-key">location</span>: <span class="field-type">GeoJSON Point</span><br>
+      <span class="field-key">district</span>: <span class="field-type">String</span><br>
+      <span class="field-key">responders</span>: <span class="field-type">ObjectId[]</span><br>
+      <span class="field-key">timeline</span>: <span class="field-type">Event[]</span><br>
+      <span class="field-key">attachments</span>: <span class="field-type">String[] (S3)</span><br>
+      <span class="field-key">closedAt</span>: <span class="field-type">Date</span>
+      <div class="idx-section">Indexes: district+category, location(2dsphere), incidentId(UNIQUE)</div>
+    </div>
+  </div>
+
+  <!-- cameras -->
+  <div class="coll-card">
+    <div class="coll-header">
+      <i class="ti ti-camera" style="font-size:16px;color:var(--color-text-success)" aria-hidden="true"></i>
+      <span class="coll-name">cameras</span>
+      <span class="coll-tag" style="background:var(--color-background-success);color:var(--color-text-success)">infra</span>
+    </div>
+    <div class="coll-body">
+      <span class="field-key">_id</span>: <span class="field-type">ObjectId</span><br>
+      <span class="field-key">cameraId</span>: <span class="field-type">String</span><span class="idx-badge">UNIQUE</span><br>
+      <span class="field-key">name</span>: <span class="field-type">String</span><br>
+      <span class="field-key">location</span>: <span class="field-type">GeoJSON Point</span><span class="idx-badge">2dsphere</span><br>
+      <span class="field-key">district</span>: <span class="field-type">String</span><br>
+      <span class="field-key">streamUrl</span>: <span class="field-type">String (RTSP/HLS)</span><br>
+      <span class="field-key">status</span>: <span class="field-type">Enum[active|offline|maintenance]</span><br>
+      <span class="field-key">aiEnabled</span>: <span class="field-type">Boolean</span><br>
+      <span class="field-key">detectionZones</span>: <span class="field-type">GeoJSON Polygon[]</span><br>
+      <span class="field-key">lastPing</span>: <span class="field-type">Date</span><br>
+      <span class="field-key">installedAt</span>: <span class="field-type">Date</span>
+      <div class="idx-section">Indexes: location(2dsphere), district, status</div>
+    </div>
+  </div>
+
+  <!-- audit_logs -->
+  <div class="coll-card">
+    <div class="coll-header">
+      <i class="ti ti-list-check" style="font-size:16px;color:var(--color-text-secondary)" aria-hidden="true"></i>
+      <span class="coll-name">audit_logs</span>
+      <span class="coll-tag" style="background:var(--color-background-secondary);color:var(--color-text-secondary)">compliance</span>
+    </div>
+    <div class="coll-body">
+      <span class="field-key">_id</span>: <span class="field-type">ObjectId</span><br>
+      <span class="field-key">userId</span>: <span class="field-type">ObjectId → users</span><br>
+      <span class="field-key">action</span>: <span class="field-type">String (ALERT_ACK, LOGIN…)</span><br>
+      <span class="field-key">resourceType</span>: <span class="field-type">String</span><br>
+      <span class="field-key">resourceId</span>: <span class="field-type">String</span><br>
+      <span class="field-key">ipAddress</span>: <span class="field-type">String</span><br>
+      <span class="field-key">userAgent</span>: <span class="field-type">String</span><br>
+      <span class="field-key">metadata</span>: <span class="field-type">Mixed</span><br>
+      <span class="field-key">timestamp</span>: <span class="field-type">Date</span><span class="idx-badge">TTL 1yr</span>
+      <div class="idx-section">Indexes: userId+timestamp, action, timestamp(TTL 1yr)</div>
+    </div>
+  </div>
+
+  <!-- notifications -->
+  <div class="coll-card">
+    <div class="coll-header">
+      <i class="ti ti-send" style="font-size:16px;color:var(--color-text-info)" aria-hidden="true"></i>
+      <span class="coll-name">notifications</span>
+      <span class="coll-tag" style="background:var(--color-background-info);color:var(--color-text-info)">ops</span>
+    </div>
+    <div class="coll-body">
+      <span class="field-key">_id</span>: <span class="field-type">ObjectId</span><br>
+      <span class="field-key">recipientId</span>: <span class="field-type">ObjectId → users</span><br>
+      <span class="field-key">channel</span>: <span class="field-type">Enum[push|sms|email|in_app]</span><br>
+      <span class="field-key">title</span>: <span class="field-type">String</span><br>
+      <span class="field-key">body</span>: <span class="field-type">String</span><br>
+      <span class="field-key">alertId</span>: <span class="field-type">ObjectId → alerts</span><br>
+      <span class="field-key">isRead</span>: <span class="field-type">Boolean</span><br>
+      <span class="field-key">deliveredAt</span>: <span class="field-type">Date</span><br>
+      <span class="field-key">failReason</span>: <span class="field-type">String</span><br>
+      <span class="field-key">createdAt</span>: <span class="field-type">Date</span><span class="idx-badge">TTL 30d</span>
+      <div class="idx-section">Indexes: recipientId+isRead, alertId, createdAt(TTL 30d)</div>
+    </div>
+  </div>
+
+</div>

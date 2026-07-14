@@ -1,0 +1,117 @@
+{
+  "experiment_id": "disaster_prediction_20260703_085909",
+  "model_version": "1.0.0",
+  "dataset_version": "1.0.0",
+  "dataset_hash": "83061cee9a2c5aaf3db8cce7b17d7046",
+  "approach_a": {
+    "hyperparameters": {
+      "learning_rate": 0.03574712922600244,
+      "max_depth": 10,
+      "n_estimators": 400,
+      "subsample": 0.8394633936788146,
+      "colsample_bytree": 0.6624074561769746,
+      "min_child_weight": 2,
+      "gamma": 0.2904180608409973,
+      "reg_alpha": 1.7323522915498704,
+      "reg_lambda": 2.002787529358022
+    },
+    "metrics": {
+      "accuracy": 0.9982716049382716,
+      "precision_macro": 0.997760480113993,
+      "recall_macro": 0.9985833333333334,
+      "f1_macro": 0.9981684613706492,
+      "roc_auc_ovr": 0.9999744603322225,
+      "training_time_s": 8.88,
+      "inference_ms_per_sample": 0.0076,
+      "optuna_time_s": 486.3,
+      "n_estimators_used": 373
+    }
+  },
+  "approach_b": {
+    "per_class_metrics": {
+      "cyclone": {
+        "accuracy": 0.9985185185185185,
+        "precision": 0.9920634920634921,
+        "recall": 1.0,
+        "f1": 0.9960159362549801,
+        "roc_auc": 0.9999668686868687,
+        "train_time_s": 1.85,
+        "best_params": {
+          "learning_rate": 0.03574712922600244,
+          "max_depth": 8,
+          "n_estimators": 250,
+          "subsample": 0.8394633936788146,
+          "colsample_bytree": 0.6624074561769746,
+          "min_child_weight": 2,
+          "gamma": 0.17425083650459838
+        }
+      },
+      "flood": {
+        "accuracy": 0.9972839506172839,
+        "precision": 1.0,
+        "recall": 0.9926666666666667,
+        "f1": 0.9963198394111743,
+        "roc_auc": 0.9999040522875816,
+        "train_time_s": 3.16,
+        "best_params": {
+          "learning_rate": 0.03574712922600244,
+          "max_depth": 8,
+          "n_estimators": 250,
+          "subsample": 0.8394633936788146,
+          "colsample_bytree": 0.6624074561769746,
+          "min_child_weight": 2,
+          "gamma": 0.17425083650459838
+        }
+      },
+      "heatwave": {
+        "accuracy": 0.9997530864197531,
+        "precision": 0.9991673605328892,
+        "recall": 1.0,
+        "f1": 0.9995835068721366,
+        "roc_auc": 0.9999999999999999,
+        "train_time_s": 2.14,
+        "best_params": {
+          "learning_rate": 0.03574712922600244,
+          "max_depth": 8,
+          "n_estimators": 250,
+          "subsample": 0.8394633936788146,
+          "colsample_bytree": 0.6624074561769746,
+          "min_child_weight": 2,
+          "gamma": 0.17425083650459838
+        }
+      },
+      "landslide": {
+        "accuracy": 0.9992592592592593,
+        "precision": 0.998330550918197,
+        "recall": 0.9966666666666667,
+        "f1": 0.9974979149291076,
+        "roc_auc": 0.9999739130434784,
+        "train_time_s": 1.65,
+        "best_params": {
+          "learning_rate": 0.03574712922600244,
+          "max_depth": 8,
+          "n_estimators": 250,
+          "subsample": 0.8394633936788146,
+          "colsample_bytree": 0.6624074561769746,
+          "min_child_weight": 2,
+          "gamma": 0.17425083650459838
+        }
+      }
+    },
+    "aggregate_metrics": {
+      "accuracy": 0.9982716049382716,
+      "precision_macro": 0.997760480113993,
+      "recall_macro": 0.9985833333333334,
+      "f1_macro": 0.9981684613706492,
+      "roc_auc_ovr": 0.9999639441731897,
+      "training_time_s": 8.8,
+      "inference_ms_per_sample": 0.0127,
+      "n_models": 4
+    }
+  },
+  "winner": "Approach A",
+  "timestamp": "2026-07-03T08:59:09.813545",
+  "git_commit": "c1210fe048861fb1c51ec8e181a328da9919d1d3",
+  "random_seed": 42,
+  "total_training_time_s": 504.0
+}
